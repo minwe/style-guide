@@ -256,7 +256,7 @@ return (
 
 **传递给 HTML 的属性：**
 
-- 传递给 HTML 元素的自定义属性，需要添加 `data-` 前缀，React 不会渲染非标准规范；
+- 传递给 HTML 元素的自定义属性，需要添加 `data-` 前缀，React 不会渲染非标准属性；
 - [无障碍](http://www.w3.org/WAI/intro/aria)属性 `aria-` 可以正常使用。
 
 ### 属性设置
