@@ -1,15 +1,13 @@
-[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/airbnb/javascript?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+# JavaScript Style Guide() {
 
-# Airbnb JavaScript Style Guide() {
-
-*A mostly reasonable approach to JavaScript*
+*更合理的 JavaScript 编写方式。 via [Airbnb](https://github.com/airbnb/javascript)*
 
 [For the ES5-only guide click here](es5/).
 
-## Table of Contents
+## 目录 <a name="table-of-contents"></a>
 
-  1. [Types](#types)
-  1. [References](#references)
+  1. [类型](#types)
+  1. [引用](#references)
   1. [Objects](#objects)
   1. [Arrays](#arrays)
   1. [Destructuring](#destructuring)
@@ -45,9 +43,9 @@
   1. [Contributors](#contributors)
   1. [License](#license)
 
-## Types
+## 类型 <a name="types"></a>
 
-  - [1.1](#1.1) <a name='1.1'></a> **Primitives**: When you access a primitive type you work directly on its value.
+  - [1.1](#1.1) <a name='1.1'></a> **基本类型**：基本类型数据直接存取。
 
     + `string`
     + `number`
@@ -63,7 +61,7 @@
 
     console.log(foo, bar); // => 1, 9
     ```
-  - [1.2](#1.2) <a name='1.2'></a> **Complex**: When you access a complex type you work on a reference to its value.
+  - [1.2](#1.2) <a name='1.2'></a> **复杂类型**：复杂数据类型通过**引用**方式存取。
 
     + `object`
     + `array`
@@ -78,13 +76,14 @@
     console.log(foo[0], bar[0]); // => 9, 9
     ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#table-of-contents)**
 
-## References
+<a name="References"></a>
+## 引用
 
-  - [2.1](#2.1) <a name='2.1'></a> Use `const` for all of your references; avoid using `var`.
+  - [2.1](#2.1) <a name='2.1'></a> 对所用引用使用 `const`；避免使用 `var`。
 
-  > Why? This ensures that you can't reassign your references (mutation), which can lead to bugs and difficult to comprehend code.
+  > 为什么？这能确保无法对引用重新赋值，以避免可能导致的 bug 和难以理解的代码。
 
     ```javascript
     // bad
@@ -96,9 +95,9 @@
     const b = 2;
     ```
 
-  - [2.2](#2.2) <a name='2.2'></a> If you must mutate references, use `let` instead of `var`.
+  - [2.2](#2.2) <a name='2.2'></a> 必须使用可变引用时，使用 `let` 而不是 `var`。
 
-  > Why? `let` is block-scoped rather than function-scoped like `var`.
+  > 为什么？使用块级作用域（`let`），而不是函数作用域（`var`）。
 
     ```javascript
     // bad
@@ -114,23 +113,25 @@
     }
     ```
 
-  - [2.3](#2.3) <a name='2.3'></a> Note that both `let` and `const` are block-scoped.
+  - [2.3](#2.3) <a name='2.3'></a> 注意：`let` 和 `const` 都是块级作用域。
 
     ```javascript
-    // const and let only exist in the blocks they are defined in.
+    // const 和 let 只存在于它们被定义的区块中
     {
       let a = 1;
       const b = 1;
     }
+
     console.log(a); // ReferenceError
     console.log(b); // ReferenceError
     ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#table-of-contents)**
 
+<a href="objects"></a>
 ## Objects
 
-  - [3.1](#3.1) <a name='3.1'></a> Use the literal syntax for object creation.
+  - [3.1](#3.1) <a name='3.1'></a> 使用字面量语法创建对象。
 
     ```javascript
     // bad
@@ -140,23 +141,27 @@
     const item = {};
     ```
 
-  - [3.2](#3.2) <a name='3.2'></a> If your code will be executed in browsers in script context, don't use [reserved words](http://es5.github.io/#x7.6.1) as keys. It won't work in IE8. [More info](https://github.com/airbnb/javascript/issues/61). It’s OK to use them in ES6 modules and server-side code.
+  - [3.2](#3.2) <a name='3.2'></a> 如果代码在浏览器中执行，不要使用[保留字](http://es5.github.io/#x7.6.1)作为键值，不然的话在 IE8 中不会执行[更多信息](https://github.com/airbnb/javascript/issues/61)（but who care IE8?）。在 ES6 模块和服务器端代码中使用则没有问题。
 
     ```javascript
     // bad
     const superman = {
-      default: { clark: 'kent' },
+      default: {
+        clark: 'kent'
+      },
       private: true,
     };
 
     // good
     const superman = {
-      defaults: { clark: 'kent' },
+      defaults: {
+        clark: 'kent'
+      },
       hidden: true,
     };
     ```
 
-  - [3.3](#3.3) <a name='3.3'></a> Use readable synonyms in place of reserved words.
+  - [3.3](#3.3) <a name='3.3'></a> 使用可读的同义词替换需要使用的保留字。
 
     ```javascript
     // bad
@@ -176,9 +181,9 @@
     ```
 
   <a name="es6-computed-properties"></a>
-  - [3.4](#3.4) <a name='3.4'></a> Use computed property names when creating objects with dynamic property names.
+  - [3.4](#3.4) <a name='3.4'></a> 创建包含动态属性名的对象时，使用经过计算的属性名称。
 
-  > Why? They allow you to define all the properties of an object in one place.
+  > 为什么？这样可以一次定义所有属性。
 
     ```javascript
 
@@ -202,7 +207,7 @@
     ```
 
   <a name="es6-object-shorthand"></a>
-  - [3.5](#3.5) <a name='3.5'></a> Use object method shorthand.
+  - [3.5](#3.5) <a name='3.5'></a> 使用对象方法简写语法（省略 `function` 关键字）。
 
     ```javascript
     // bad
@@ -225,9 +230,9 @@
     ```
 
   <a name="es6-object-concise"></a>
-  - [3.6](#3.6) <a name='3.6'></a> Use property value shorthand.
+  - [3.6](#3.6) <a name='3.6'></a> 使用属性值简写语法。
 
-  > Why? It is shorter to write and descriptive.
+  > 为什么？这样更简洁、更具描述性。
 
     ```javascript
     const lukeSkywalker = 'Luke Skywalker';
@@ -243,9 +248,8 @@
     };
     ```
 
-  - [3.7](#3.7) <a name='3.7'></a> Group your shorthand properties at the beginning of your object declaration.
-
-  > Why? It's easier to tell which properties are using the shorthand.
+  - [3.7](#3.7) <a name='3.7'></a> 把简写的属性分组排列在对象声明顶部。
+  > 为什么？这样更容易区分哪些属性采用了简写。
 
     ```javascript
     const anakinSkywalker = 'Anakin Skywalker';
@@ -272,12 +276,14 @@
     };
     ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#table-of-contents)**
 
-## Arrays
+<a name="arrays"></a>
 
-  - [4.1](#4.1) <a name='4.1'></a> Use the literal syntax for array creation.
+## 数组
 
+  - [4.1](#4.1) <a name='4.1'></a> 使用字面量语法创建数组。
+  
     ```javascript
     // bad
     const items = new Array();
@@ -286,7 +292,7 @@
     const items = [];
     ```
 
-  - [4.2](#4.2) <a name='4.2'></a> Use Array#push instead of direct assignment to add items to an array.
+  - [4.2](#4.2) <a name='4.2'></a> 使用 `push` 添加元素，而不是直接赋值。
 
     ```javascript
     const someStack = [];
@@ -300,8 +306,8 @@
     ```
 
   <a name="es6-array-spreads"></a>
-  - [4.3](#4.3) <a name='4.3'></a> Use array spreads `...` to copy arrays.
-
+  - [4.3](#4.3) <a name='4.3'></a> 使用数组扩展运算符 `...` 拷贝数组。
+  
     ```javascript
     // bad
     const len = items.length;
@@ -315,20 +321,22 @@
     // good
     const itemsCopy = [...items];
     ```
-  - [4.4](#4.4) <a name='4.4'></a> To convert an array-like object to an array, use Array#from.
+  - [4.4](#4.4) <a name='4.4'></a> 使用 `Array.from` 转换类数组对象。
 
     ```javascript
     const foo = document.querySelectorAll('.foo');
     const nodes = Array.from(foo);
     ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#table-of-contents)**
 
-## Destructuring
+<a name="destructuring"></a>
 
-  - [5.1](#5.1) <a name='5.1'></a> Use object destructuring when accessing and using multiple properties of an object.
+## 解构
 
-  > Why? Destructuring saves you from creating temporary references for those properties.
+  - [5.1](#5.1) <a name='5.1'></a> 调用对象的多个属性时，使用解构语法。
+
+  > 为什么？解构可以减少临时引用属性。
 
     ```javascript
     // bad
@@ -351,7 +359,8 @@
     }
     ```
 
-  - [5.2](#5.2) <a name='5.2'></a> Use array destructuring.
+  - [5.2](#5.2) <a name='5.2'></a> 使用数组解构。
+
 
     ```javascript
     const arr = [1, 2, 3, 4];
@@ -364,10 +373,10 @@
     const [first, second] = arr;
     ```
 
-  - [5.3](#5.3) <a name='5.3'></a> Use object destructuring for multiple return values, not array destructuring.
+  - [5.3](#5.3) <a name='5.3'></a> 多个返回值时使用对象解构，而不是数组。
 
-  > Why? You can add new properties over time or change the order of things without breaking call sites.
-
+  > 为什么？对象顺序不敏感，方便添加新属性。
+  
     ```javascript
     // bad
     function processInput(input) {
@@ -389,11 +398,12 @@
     ```
 
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#table-of-contents)**
 
-## Strings
+<a name="strings"></a>
+## 字符串
 
-  - [6.1](#6.1) <a name='6.1'></a> Use single quotes `''` for strings.
+  - [6.1](#6.1) <a name='6.1'></a> 使用单引号 `''`。
 
     ```javascript
     // bad
@@ -403,8 +413,8 @@
     const name = 'Capt. Janeway';
     ```
 
-  - [6.2](#6.2) <a name='6.2'></a> Strings longer than 80 characters should be written across multiple lines using string concatenation.
-  - [6.3](#6.3) <a name='6.3'></a> Note: If overused, long strings with concatenation could impact performance. [jsPerf](http://jsperf.com/ya-string-concat) & [Discussion](https://github.com/airbnb/javascript/issues/40).
+  - [6.2](#6.2) <a name='6.2'></a> 长度超过 80 个字符的字符串应采用多行拼接。
+  - [6.3](#6.3) <a name='6.3'></a> 注意：过度使用长字符串拼接会影响性能。[jsPerf 测试](http://jsperf.com/ya-string-concat) & [讨论](https://github.com/airbnb/javascript/issues/40)。
 
     ```javascript
     // bad
@@ -423,9 +433,8 @@
     ```
 
   <a name="es6-template-literals"></a>
-  - [6.4](#6.4) <a name='6.4'></a> When programmatically building up strings, use template strings instead of concatenation.
-
-  > Why? Template strings give you a readable, concise syntax with proper newlines and string interpolation features.
+  - [6.4](#6.4) <a name='6.4'></a> 编程创建字符串时使用模板语法替代拼接。
+  > 为什么？模板字符串提供换行、变量插入功能，让代码更简洁易读。
 
     ```javascript
     // bad
@@ -444,15 +453,16 @@
     }
     ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#table-of-contents)**
 
+<a name="functions"></a>
 
 ## Functions
 
-  - [7.1](#7.1) <a name='7.1'></a> Use function declarations instead of function expressions.
+  - [7.1](#7.1) <a name='7.1'></a> 使用函数声明而不是函数表达式。
 
-  > Why? Function declarations are named, so they're easier to identify in call stacks. Also, the whole body of a function declaration is hoisted, whereas only the reference of a function expression is hoisted. This rule makes it possible to always use [Arrow Functions](#arrow-functions) in place of function expressions.
-
+  > 为什么？函数声明是命名的，易于跟踪调试；函数声明把真个函数提升，而函数表达式只提升引用的变量名。此规则使得 [箭头函数](#arrow-functions) 可以替代函数表达式。
+  
     ```javascript
     // bad
     const foo = function () {
@@ -463,7 +473,7 @@
     }
     ```
 
-  - [7.2](#7.2) <a name='7.2'></a> Function expressions:
+  - [7.2](#7.2) <a name='7.2'></a> 函数表达式：
 
     ```javascript
     // immediately-invoked function expression (IIFE)
@@ -472,8 +482,9 @@
     })();
     ```
 
-  - [7.3](#7.3) <a name='7.3'></a> Never declare a function in a non-function block (if, while, etc). Assign the function to a variable instead. Browsers will allow you to do it, but they all interpret it differently, which is bad news bears.
-  - [7.4](#7.4) <a name='7.4'></a> **Note:** ECMA-262 defines a `block` as a list of statements. A function declaration is not a statement. [Read ECMA-262's note on this issue](http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf#page=97).
+  - [7.3](#7.3) <a name='7.3'></a> 绝不要在非函数代码块中声明函数（`if`、`while` 等等），可以把函数赋值给一个变量。浏览器允许这么做，但解析结果会不一致。
+  
+  - [7.4](#7.4) <a name='7.4'></a> **注意：** ECMA-262 为一系列语句定义了「块」(`block`），函数什么并不包含在其中。 [阅读 ECMA-262 关于这个问题问题的说明](http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf#page=97).
 
     ```javascript
     // bad
@@ -492,8 +503,8 @@
     }
     ```
 
-  - [7.5](#7.5) <a name='7.5'></a> Never name a parameter `arguments`. This will take precedence over the `arguments` object that is given to every function scope.
-
+  - [7.5](#7.5) <a name='7.5'></a> 绝不要把参数命名为 `arguments`，这会覆盖每个函数作用域里的 `arguments` 对象。
+  
     ```javascript
     // bad
     function nope(name, options, arguments) {
@@ -507,9 +518,9 @@
     ```
 
   <a name="es6-rest"></a>
-  - [7.6](#7.6) <a name='7.6'></a> Never use `arguments`, opt to use rest syntax `...` instead.
+  - [7.6](#7.6) <a name='7.6'></a> 绝不要使用 `arguments`，使用 `...` 语法代替。
 
-  > Why? `...` is explicit about which arguments you want pulled. Plus rest arguments are a real Array and not Array-like like `arguments`.
+  > 为什么？ `...` 明确地反应所处理的参数；`...` 语法返回一个真正的数组，而不是像 `arguments` 一样的类数组。
 
     ```javascript
     // bad
@@ -525,8 +536,8 @@
     ```
 
   <a name="es6-default-parameters"></a>
-  - [7.7](#7.7) <a name='7.7'></a> Use default parameter syntax rather than mutating function arguments.
-
+  - [7.7](#7.7) <a name='7.7'></a> 使用默认参数语法，而不是去改变函数参数。
+  
     ```javascript
     // really bad
     function handleThings(opts) {
@@ -551,9 +562,9 @@
     }
     ```
 
-  - [7.8](#7.8) <a name='7.8'></a> Avoid side effects with default parameters
+  - [7.8](#7.8) <a name='7.8'></a> 设置默认参数时应避免产生其他影响。
 
-  > Why? They are confusing to reason about.
+  > 为什么？这会产生令人迷惑的结果。
 
   ```javascript
   var b = 1;
@@ -568,15 +579,15 @@
   ```
 
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#table-of-contents)**
 
-## Arrow Functions
+<a name="arrow-functions"></a>
+## 箭头函数
 
-  - [8.1](#8.1) <a name='8.1'></a> When you must use function expressions (as when passing an anonymous function), use arrow function notation.
-
-  > Why? It creates a version of the function that executes in the context of `this`, which is usually what you want, and is a more concise syntax.
-
-  > Why not? If you have a fairly complicated function, you might move that logic out into its own function declaration.
+  - [8.1](#8.1) <a name='8.1'></a> 必须使用函数表达式（或传递一个匿名函数）时，使用箭头函数语法。
+  > 为什么？箭头函数自动绑定执行上下文文为创建时的 `this`；更简洁。
+  
+  > 为什么不？当遇到复杂的函数时，或许应该把逻辑放到独立的函数声明中去。
 
     ```javascript
     // bad
@@ -590,11 +601,10 @@
     });
     ```
 
-  - [8.2](#8.2) <a name='8.2'></a> If the function body fits on one line and there is only a single argument, feel free to omit the braces and parentheses, and use the implicit return. Otherwise, add the parentheses, braces, and use a `return` statement.
+  - [8.2](#8.2) <a name='8.2'></a> 函数体只有一行、只有一个参数而且不需要返回值时，可以省略花括号和圆括号。否则，保留括号，并使用 `return` 语句。
 
-  > Why? Syntactic sugar. It reads well when multiple functions are chained together.
-
-  > Why not? If you plan on returning an object.
+  > 为什么？语法糖。多个函数连缀时可读性很好。
+  > 为什么不？需要返回值的时候。
 
     ```javascript
     // good
@@ -606,9 +616,9 @@
     }, 0);
     ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#table-of-contents)**
 
-
+<a name="constructors"></a>
 ## Constructors
 
   - [9.1](#9.1) <a name='9.1'></a> Always use `class`. Avoid manipulating `prototype` directly.
@@ -718,7 +728,7 @@
     }
     ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#table-of-contents)**
 
 
 ## Modules
@@ -768,7 +778,7 @@
     export default es6;
     ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#table-of-contents)**
 
 ## Iterators and Generators
 
@@ -801,7 +811,7 @@
 
   > Why? They don't transpile well to ES5.
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#table-of-contents)**
 
 
 ## Properties
@@ -836,7 +846,7 @@
     const isJedi = getProp('jedi');
     ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#table-of-contents)**
 
 
 ## Variables
@@ -945,7 +955,7 @@
     }
     ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#table-of-contents)**
 
 
 ## Hoisting
@@ -1041,7 +1051,7 @@
 
   - For more information refer to [JavaScript Scoping & Hoisting](http://www.adequatelygood.com/2010/2/JavaScript-Scoping-and-Hoisting) by [Ben Cherry](http://www.adequatelygood.com/).
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#table-of-contents)**
 
 
 ## Comparison Operators & Equality
@@ -1089,7 +1099,7 @@
 
   - [15.4](#15.4) <a name='15.4'></a> For more information see [Truth Equality and JavaScript](http://javascriptweblog.wordpress.com/2011/02/07/truth-equality-and-javascript/#more-2108) by Angus Croll.
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#table-of-contents)**
 
 
 ## Blocks
@@ -1141,7 +1151,7 @@
     ```
 
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#table-of-contents)**
 
 
 ## Comments
@@ -1232,7 +1242,7 @@
     }
     ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#table-of-contents)**
 
 
 ## Whitespace
@@ -1418,7 +1428,7 @@
     ```
 
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#table-of-contents)**
 
 ## Commas
 
@@ -1499,7 +1509,7 @@
     ];
     ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#table-of-contents)**
 
 
 ## Semicolons
@@ -1528,7 +1538,7 @@
 
     [Read more](http://stackoverflow.com/a/7365214/1712802).
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#table-of-contents)**
 
 
 ## Type Casting & Coercion
@@ -1605,7 +1615,7 @@
     const hasAge = !!age;
     ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#table-of-contents)**
 
 
 ## Naming Conventions
@@ -1739,7 +1749,7 @@
     ```
 
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#table-of-contents)**
 
 
 ## Accessors
@@ -1794,7 +1804,7 @@
     }
     ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#table-of-contents)**
 
 
 ## Events
@@ -1825,7 +1835,8 @@
     });
     ```
 
-  **[⬆ back to top](#table-of-contents)**
+  **[⬆ 返回目录
+ ](#table-of-contents)**
 
 
 ## jQuery
@@ -1887,14 +1898,14 @@
     $sidebar.find('ul').hide();
     ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#table-of-contents)**
 
 
 ## ECMAScript 5 Compatibility
 
   - [26.1](#26.1) <a name='26.1'></a> Refer to [Kangax](https://twitter.com/kangax/)'s ES5 [compatibility table](http://kangax.github.com/es5-compat-table/).
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#table-of-contents)**
 
 ## ECMAScript 6 Styles
 
@@ -1914,7 +1925,7 @@
 1. [Iterators and Generators](#iterators-and-generators)
 1. [Modules](#modules)
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#table-of-contents)**
 
 ## Testing
 
@@ -1926,7 +1937,7 @@
     }
     ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#table-of-contents)**
 
 
 ## Performance
@@ -1940,7 +1951,7 @@
   - [Long String Concatenation](http://jsperf.com/ya-string-concat)
   - Loading...
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#table-of-contents)**
 
 
 ## Resources
@@ -2021,7 +2032,7 @@
   - [JavaScript Jabber](http://devchat.tv/js-jabber/)
 
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#table-of-contents)**
 
 ## In the Wild
 
@@ -2076,7 +2087,7 @@
   - **Zillow**: [zillow/javascript](https://github.com/zillow/javascript)
   - **ZocDoc**: [ZocDoc/javascript](https://github.com/ZocDoc/javascript)
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#table-of-contents)**
 
 ## Translation
 
@@ -2135,6 +2146,6 @@ CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#table-of-contents)**
 
 # };
